@@ -74,10 +74,9 @@ end
 function getState()
    if debug == 1 then print('start getState') end
    local uuId = uuid()
-   local d4 = '\"random='..uuId..'&clientId='..clientId..'&clientIdChecksum='..clientIdChecksum..'&agreementId='..agreementId..'&agreementIdChecksum='..agreementIdChecksum..'\"'  
-   local H = '\"Content-Type: application/x-www-form-urlencoded\"' 
+   local d4 = '\"random='..uuId..'&clientId='..clientId..'&clientIdChecksum='..clientIdChecksum..'\"'  
    if debug == 1 then print('body getState: '..d4) end
-   getState = assert(io.popen('curl -X GET -H '..H..' -d '..d4..' https://toonopafstand.eneco.nl/toonMobileBackendWeb/client/auth/retrieveToonState'))
+   getState = assert(io.popen('curl -X GET -d '..d4..' https://toonopafstand.eneco.nl/toonMobileBackendWeb/client/auth/retrieveToonState'))
    local state = getState:read('*all')
    print('getstate: '..state)
       getState:close()
