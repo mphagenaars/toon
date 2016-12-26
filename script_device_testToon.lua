@@ -86,16 +86,25 @@ end
 -- GETSTATE
 function getState()
    if debug == 1 then print('start getState') end
-   local tmp3 = uuid()
-   --if debug == 1 then print('getstate - uuid: '..uuid4) end
-   local d4 = '\"random='..uuid4..'&clientId='..clientId..'&clientIdChecksum='..clientIdChecksum..'\"'  
-   if debug == 1 then print('body getState: '..d4) end
-   getState = assert(io.popen('curl -X GET -d '..d4..' https://toonopafstand.eneco.nl/toonMobileBackendWeb/client/auth/retrieveToonState'))
-   local state = getState:read('*all')
-   print('getstate: '..state)
-      getState:close()
-      jsonState, pos, err = json.decode(state, 1, nil)
-	   if jsonState.success == false then print("Did not retreive Toon state") end
+   i = 1 
+   repeat
+      local tmp3 = uuid()
+      --if debug == 1 then print('getstate - uuid: '..uuid4) end
+      local d4 = '\"random='..uuid4..'&clientId='..clientId..'&clientIdChecksum='..clientIdChecksum..'\"'  
+      if debug == 1 then print('body getState: '..d4) end
+      getState = assert(io.popen('curl -X GET -d '..d4..' https://toonopafstand.eneco.nl/toonMobileBackendWeb/client/auth/retrieveToonState'))
+      local state = getState:read('*all')
+      print('getstate: '..state)
+         getState:close()
+         jsonState, pos, err = json.decode(state, 1, nil)
+	 if jsonState.success == true then 
+	    print("SUCCESS!")
+	    stop = true
+	 else 
+	    print("FAIL!")
+	    i = i + 1
+	 end
+   until (stop or i == 4)
 end
 
 commandArray = {}
