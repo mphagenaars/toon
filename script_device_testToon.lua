@@ -6,7 +6,17 @@ local pass = 'xxxxxxxxxx'
 
 local debug = 1
 
--- UUID
+-- UUID1
+--random = math.random
+--function uuid1()
+--   local template ='xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+--   return string.gsub(template, '[xy]', function (c)
+--      local v = (c == 'x') and random(0, 0xf) or random(8, 0xb)
+--      return string.format('%x', v)
+--   end)
+--end
+
+-- UUID4
 function uuid()
    tmp = assert(io.popen('curl GET https://www.uuidgenerator.net/api/version4'))
    uuid4 = tostring(tmp:read('*all'))
